@@ -1,33 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>My App</title>
+    <title>My App - Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
-<h1>My App</h1>
+<body class="bg-light">
 
+<nav class="navbar navbar-dark bg-dark mb-4 shadow">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🐾 Animal Management App</span>
+        <div class="d-flex align-items-center text-white">
+            <span class="me-3">Logged in as: <strong class="text-warning" sec:authentication="name">User</strong></span>
+            <a th:href="@{/logout}" class="btn btn-outline-danger btn-sm">Logout</a>
+        </div>
+    </div>
+</nav>
 
-<span sec:authentication="name"></span>
-<br><br>
+<div class="container">
+    <div class="p-4 mb-4 bg-white rounded shadow-sm">
+        <h1 class="display-5 text-secondary">Welcome to My App</h1>
+        <p class="lead">Manage your database of dogs, cats, and users easily from one central dashboard.</p>
+    </div>
 
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/}">List of Users</a>
-<br>
-<a th:href="@{/dogs/}">List of Dogs</a>
-<br>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title text-primary">🐕 Dogs Directory</h5>
+                        <p class="card-text text-muted">View the complete list of registered dogs, add new ones, or manage owners.</p>
+                    </div>
+                    <a th:href="@{/dogs/}" class="btn btn-primary w-100 mt-3">Open Dogs List</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title text-success">🐈 Cats Directory</h5>
+                        <p class="card-text text-muted">Explore all registered cats, update their favorite places, and track their ages.</p>
+                    </div>
+                    <a th:href="@{/cats/}" class="btn btn-success w-100 mt-3">Open Cats List</a>
+                </div>
+            </div>
+        </div>
 
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/}">List of Users</a>
-<br>
-<a th:href="@{/cats/}">List of Cats</a>
-<br>
+        <div class="col-md-12 col-lg-4" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="card h-100 shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">🛡️ Admin Zone</div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title text-danger">Management & Control</h5>
+                        <p class="card-text text-muted">Access administration privileges, view system statistics, and manage system users.</p>
+                    </div>
+                    <div class="mt-3">
+                        <a th:href="@{/users/}" class="btn btn-outline-danger w-100 mb-2">Manage Users</a>
+                        <a th:href="@{/admin}" class="btn btn-danger w-100">System Administration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
 
-
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">Administration</a>
-<br><br>
-
-<a th:href="@{/logout}">Logout</a>
+<footer class="footer mt-5 py-3 bg-white text-center border-top shadow-sm">
+    <div class="container">
+        <span class="text-muted">© 2026 UHK - PRO2 Project</span>
+    </div>
+</footer>
 
 </body>
 </html>

@@ -1,39 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>List of Cats</title>
+    <title>Cat List</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="container mt-4">
-<h1 class="mb-4">List of Cats</h1>
-<a href="/cats/create" class="btn btn-primary mb-3">Add New Cat</a>
+<body class="bg-light">
 
-<table class="table table-striped table-bordered">
-    <thead class="table-dark">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Place</th>
-        <th>Owner</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="cat : ${cats}">
-        <td th:text="${cat.id}">1</td>
-        <td><a th:href="@{/cats/{id}(id=${cat.id})}" th:text="${cat.name}">Cat Name</a></td>
-        <td th:text="${cat.age}">3</td>
-        <td th:text="${cat.place}">Prague</td>
-        <td th:text="${cat.user != null ? cat.user.username : 'No Owner'}">Owner</td>
-        <td>
-            <a th:href="@{/cats/{id}/edit(id=${cat.id})}" class="btn btn-sm btn-warning">Edit</a>
-            <a th:href="@{/cats/{id}/delete(id=${cat.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="/" class="btn btn-secondary">Back to Home</a>
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🐈 Cat Management</span>
+        <a href="/" class="btn btn-outline-light btn-sm">Back to Dashboard</a>
+    </div>
+</nav>
+
+<div class="container bg-white p-4 rounded shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 text-secondary mb-0">List of Cats</h1>
+        <a th:href="@{/cats/create}" class="btn btn-success fw-bold">➕ Add New Cat</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle border">
+            <thead class="table-dark">
+            <tr>
+                <th style="width: 10%">ID</th>
+                <th style="width: 25%">Name (Click for detail)</th>
+                <th style="width: 15%">Age</th>
+                <th style="width: 15%">Place</th>
+                <th style="width: 15%">Owner</th>
+                <th style="width: 20%" class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cat : ${cats}">
+                <td class="fw-bold text-muted" th:text="${cat.id}">1</td>
+                <td>
+                    <a th:href="@{/cats/{id}(id=${cat.id})}" class="text-decoration-none fw-semibold text-success" th:text="${cat.name}">Cat Name</a>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border" th:text="${cat.age} + ' yrs'">3 yrs</span>
+                </td>
+                <td th:text="${cat.place}" class="text-secondary">Prague</td>
+                <td th:text="${cat.user != null ? cat.user.username : 'No Owner'}" class="text-secondary">Owner</td>
+                <td>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a th:href="@{/cats/{id}/edit(id=${cat.id})}" class="btn btn-sm btn-warning">✏️ Edit</a>
+                        <a th:href="@{/cats/{id}/delete(id=${cat.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this cat?')">🗑️ Delete</a>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(cats)}">
+                <td colspan="6" class="text-center text-muted py-4">No cats found in the database. Add the first one!</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

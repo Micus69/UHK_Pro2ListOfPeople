@@ -1,21 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User List</title>
+    <title>User Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-light">
 
-<h1>User Detail</h1>
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🛡️ Admin Zone: User Management</span>
+        <a href="/users/" class="btn btn-outline-light btn-sm">Back to Users List</a>
+    </div>
+</nav>
 
-Name: <span th:text="${user.name}"></span><br>
-Username: <span th:text="${user.username}"></span><br>
-Role: <span th:text="${user.role}"></span><br>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card shadow border-0" style="width: 28rem;">
+        <div class="card-header bg-dark text-white text-center py-3">
+            <h3 class="card-title mb-0">👤 User Profile</h3>
+        </div>
+        <div class="card-body p-4">
 
-<br>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Full Name:</span>
+                    <span class="fs-5 text-dark fw-semibold" th:text="${user.name}">John Doe</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Username:</span>
+                    <span class="text-secondary font-monospace" th:text="${user.username}">johndoe123</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">System Role:</span>
+                    <span th:class="${user.role == 'ADMIN' || user.role == 'ROLE_ADMIN'} ? 'badge bg-danger fs-6' : 'badge bg-info text-dark fs-6'"
+                          th:text="${user.role}">ROLE_USER</span>
+                </li>
+            </ul>
 
-<a th:href="@{'/users/' + ${user.id} + '/edit'}">Edit this User</a><br>
-<a th:href="@{'/users/' + ${user.id} + '/delete'}">Delete this User</a>
+            <div class="d-flex gap-2">
+                <a th:href="@{/users/{id}/edit(id=${user.id})}" class="btn btn-warning flex-grow-1fw-bold">✏️ Edit User</a>
+                <a th:href="@{/users/{id}/delete(id=${user.id})}" class="btn btn-danger flex-grow-1" onclick="return confirm('Are you sure you want to delete this user? This might affect their linked animals!')">🗑️ Delete</a>
+            </div>
+        </div>
+        <div class="card-footer bg-white border-top-0 text-center pb-3">
+            <a href="/" class="text-decoration-none text-muted btn btn-link btn-sm">Return to Dashboard</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

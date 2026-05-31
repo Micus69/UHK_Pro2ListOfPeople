@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/**").hasRole("ADMIN")
                         .requestMatchers("/rest/**").permitAll()
                         .requestMatchers("/cats/**").permitAll()
+                        .requestMatchers("/dogs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.csrf(csrf -> csrf.disable())

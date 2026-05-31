@@ -1,41 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Save Cat</title>
+    <title th:text="${cat.id != 0 ? 'Edit Cat' : 'New Cat'}">Save Cat</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="container mt-4">
-<h1 class="mb-4" th:text="${cat.id == 0} ? 'Add New Cat' : 'Edit Cat'">Save Cat</h1>
+<body class="bg-light">
 
-<form th:action="@{/cats/save}" th:object="${cat}" method="post" class="col-md-6">
-    <input type="hidden" th:field="*{id}">
-
-    <div class="mb-3">
-        <label for="name" class="form-label">Cat Name:</label>
-        <input type="text" id="name" th:field="*{name}" class="form-control" required>
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🐈 Cat Management</span>
+        <a href="/cats/" class="btn btn-outline-light btn-sm">Back to List</a>
     </div>
+</nav>
 
-    <div class="mb-3">
-        <label for="age" class="form-label">Age:</label>
-        <input type="number" id="age" th:field="*{age}" class="form-control" required>
+<div class="container d-flex justify-content-center mt-4">
+    <div class="card shadow border-0" style="width: 32rem;">
+        <div class="card-header bg-success text-white text-center py-3">
+            <h3 class="card-title mb-0" th:text="${cat.id != 0 ? '✏️ Edit Cat Profile' : '➕ Add New Cat'}">Save Cat</h3>
+        </div>
+
+        <div class="card-body p-4">
+            <form th:action="@{/cats/save}" th:object="${cat}" method="post">
+
+                <input type="hidden" th:field="*{id}">
+
+                <div class="mb-3">
+                    <label for="name" class="form-label fw-bold text-secondary">Cat Name</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter cat's name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="age" class="form-label fw-bold text-secondary">Age (Years)</label>
+                    <input type="number" id="age" th:field="*{age}" class="form-control" placeholder="Enter cat's age" min="0" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="place" class="form-label fw-bold text-secondary">Favorite Place</label>
+                    <input type="text" id="place" th:field="*{place}" class="form-control" placeholder="e.g. Living room, Garden" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="user" class="form-label fw-bold text-secondary">Owner / Caregiver</label>
+                    <select id="user" th:field="*{user}" class="form-select">
+                        <option value="">-- Select Owner (Optional) --</option>
+                        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+                    </select>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success flex-grow-1 py-2 fw-bold">Save Changes</button>
+                    <a href="/cats/" class="btn btn-outline-secondary flex-grow-1 py-2">Cancel</a>
+                </div>
+
+            </form>
+        </div>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label for="place" class="form-label">Favorite Place:</label>
-        <input type="text" id="place" th:field="*{place}" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="user" class="form-label">Owner:</label>
-        <select id="user" th:field="*{user}" class="form-select">
-            <option value="">-- Select Owner --</option>
-            <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-success">Save</button>
-    <a href="/cats/" class="btn btn-secondary">Cancel</a>
-</form>
 </body>
 </html>

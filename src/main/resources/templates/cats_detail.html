@@ -1,20 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Cat Detail</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="container mt-4">
-<div class="card" style="width: 24rem;">
-    <div class="card-body">
-        <h5 class="card-title" th:text="'Cat: ' + ${cat.name}">Cat Name</h5>
-        <p class="card-text" th:text="'Age: ' + ${cat.age} + ' years old'"></p>
-        <p class="card-text" th:text="'Favorite Place: ' + ${cat.place}"></p>
-        <p class="card-text" th:text="'Owner: ' + ${cat.user != null ? cat.user.username : 'No Owner'}"></p>
-        <a th:href="@{/cats/{id}/edit(id=${cat.id})}" class="btn btn-warning">Edit</a>
-        <a href="/cats/" class="btn btn-secondary">Back to List</a>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🐈 Cat Management</span>
+        <a href="/cats/" class="btn btn-outline-light btn-sm">Back to List</a>
+    </div>
+</nav>
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card shadow border-0" style="width: 28rem;">
+        <div class="card-header bg-success text-white text-center py-3">
+            <h3 class="card-title mb-0">🐱 Cat Profile</h3>
+        </div>
+        <div class="card-body p-4">
+
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Name:</span>
+                    <span class="fs-5 text-dark fw-semibold" th:text="${cat.name}">Cat Name</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Age:</span>
+                    <span class="badge bg-secondary rounded-pill fs-6" th:text="${cat.age} + ' years'">3 years</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Favorite Place:</span>
+                    <span class="text-secondary fw-medium" th:text="${cat.place}">Garden</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <span class="text-muted fw-bold">Owner:</span>
+                    <span class="text-success fw-medium" th:text="${cat.user != null ? cat.user.username : 'No Owner'}">Owner Name</span>
+                </li>
+            </ul>
+
+            <div class="d-flex gap-2">
+                <a th:href="@{/cats/{id}/edit(id=${cat.id})}" class="btn btn-warning flex-grow-1fw-bold">✏️ Edit</a>
+                <a th:href="@{/cats/{id}/delete(id=${cat.id})}" class="btn btn-danger flex-grow-1" onclick="return confirm('Are you sure you want to delete this cat?')">🗑️ Delete</a>
+            </div>
+        </div>
+        <div class="card-footer bg-white border-top-0 text-center pb-3">
+            <a href="/" class="text-decoration-none text-muted btn btn-link btn-sm">Return to Dashboard</a>
+        </div>
     </div>
 </div>
+
 </body>
 </html>
