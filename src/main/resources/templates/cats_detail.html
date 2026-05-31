@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+<div class="card" style="width: 24rem;">
+    <div class="card-body">
+        <h5 class="card-title" th:text="'Cat: ' + ${cat.name}">Cat Name</h5>
+        <p class="card-text" th:text="'Age: ' + ${cat.age} + ' years old'"></p>
+        <p class="card-text" th:text="'Favorite Place: ' + ${cat.place}"></p>
+        <p class="card-text" th:text="'Owner: ' + ${cat.user != null ? cat.user.username : 'No Owner'}"></p>
+        <a th:href="@{/cats/{id}/edit(id=${cat.id})}" class="btn btn-warning">Edit</a>
+        <a href="/cats/" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+</body>
+</html>
