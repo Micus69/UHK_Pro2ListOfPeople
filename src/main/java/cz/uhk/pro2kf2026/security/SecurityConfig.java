@@ -33,22 +33,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests // Change to authorizeHttpRequests
+                .authorizeHttpRequests((requests) -> requests
+                        // Povolíme přístup na hlavní stránku a statické soubory všem
+                        .requestMatchers("/", "/css/**", "/js/**", "/rest/**", "/cats/**", "/dogs/**", "/foxs/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").hasRole("ADMIN")
-                        .requestMatchers("/rest/**").permitAll()
-                        .requestMatchers("/cats/**").permitAll()
-                        .requestMatchers("/dogs/**").permitAll()
-                        .requestMatchers("/foxs/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                //.csrf(csrf -> csrf.disable())
-                .formLogin(Customizer.withDefaults())
-                /*.formLogin((form) -> form
-                        .loginPage("/login") // Custom login page
-                        .loginProcessingUrl("/login") // Form submission URL
-                        .defaultSuccessUrl("/home", true)
-                        .permitAll()) // Permit all to access the login page*/
+                // Použijeme VÝCHOZÍ přihlašovací okno od Springu, které stoprocentně funguje
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/", true) // Po úspěšném loginu tě hodí zpět na index.html
+                        .permitAll()
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
