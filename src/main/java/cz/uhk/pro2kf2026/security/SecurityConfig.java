@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/rest/**").permitAll()
                         .requestMatchers("/cats/**").permitAll()
                         .requestMatchers("/dogs/**").permitAll()
+                        .requestMatchers("/foxs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.csrf(csrf -> csrf.disable())

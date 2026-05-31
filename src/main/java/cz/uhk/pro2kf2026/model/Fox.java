@@ -8,7 +8,8 @@ public class Fox {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id; // Změněno na Long, aby to sedělo s ostatními entitami
+
     private String name;
     private int age;
     private String place;
@@ -16,15 +17,9 @@ public class Fox {
     @ManyToOne
     private User user;
 
-    public User getUser() {
-        return user;
+    // Konstruktory
+    public Fox() {
     }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    //Pomocí AltGr + Insert vygenerujte gettery, settery a konstruktor
 
     public Fox(String name, int age, String place) {
         this.name = name;
@@ -32,21 +27,18 @@ public class Fox {
         this.place = place;
     }
 
-    public Fox() {}
+    // Gettery a Settery
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {return name;}
 
     public void setName(String name) {
         this.name = name;
@@ -60,7 +52,21 @@ public class Fox {
         this.age = age;
     }
 
-    public String getPlace()  {return name;}
+    // OPRAVENO: Tady se ti původně vracelo 'name' místo 'place'
+    public String getPlace() {
+        return place;
+    }
 
-    public void setPlace(String place) {this.name = place;}
+    // OPRAVENO: Tady se ti původně ukládalo do 'name' místo 'place'
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
